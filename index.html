@@ -23,39 +23,52 @@
         <div class="sidebar">
           <form action="">
             <h4>Enter player information:</h4>
-            <label for="player1-name">Player 1 name:</label>
+            <label for="player1-name" id="player1-input">Player 1 name:</label>
             <input type="text" id="player1-name" placeholder="player 1" />
-            <label for="player2-name">Player 2 name:</label>
+            <br /><br />
+            <label for="player2-name" id="player2-input">Player 2 name:</label>
             <input type="text" id="player2-name" placeholder="player 2" />
             <br /><br />
-            <button type="submit">Submit</button>
+            <button type="submit" id="name-submit-btn">Submit</button>
             <button type="reset">Reset</button>
           </form>
+          <div class="player-name-display">
+            <h4>Players:</h4>
+            <ul>
+              <li>Player 1 (X):</li>
+              <br />
+              <li class="name" id="name1"></li>
+              <br /><br /><br />
+              <li>Player 2 (O):</li>
+              <br />
+              <li class="name" id="name2"></li>
+            </ul>
+          </div>
         </div>
         <div class="gameplay">
           <div class="gamealerts">
-            <h2>
+            <h2 id="alert-message">
               Welcome player1 and player2! Press "Begin game!" to start playing!
             </h2>
           </div>
           <div class="gamebtns">
-            <button>Begin game!</button>
-            <button>Restart</button>
+            <button id="begin-game-btn">Begin game!</button>
+            <button id="restart-game-btn">Restart</button>
           </div>
           <div class="gameboard">
-            <div class="gamesquare">
+            <div class="gamesquare" id="gamequare1">
               <h1>X</h1>
             </div>
-            <div class="gamesquare">
+            <div class="gamesquare" id="gamequare2">
               <h1>O</h1>
             </div>
-            <div class="gamesquare"></div>
-            <div class="gamesquare"></div>
-            <div class="gamesquare"></div>
-            <div class="gamesquare"></div>
-            <div class="gamesquare"></div>
-            <div class="gamesquare"></div>
-            <div class="gamesquare"></div>
+            <div class="gamesquare" id="gamequare3"></div>
+            <div class="gamesquare" id="gamequare4"></div>
+            <div class="gamesquare" id="gamequare5"></div>
+            <div class="gamesquare" id="gamequare6"></div>
+            <div class="gamesquare" id="gamequare7"></div>
+            <div class="gamesquare" id="gamequare8"></div>
+            <div class="gamesquare" id="gamequare9"></div>
           </div>
         </div>
       </div>

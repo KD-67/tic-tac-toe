@@ -3,7 +3,8 @@
   --sidebar-bgc: rgb(191, 178, 246);
   --gameplay-bgc: rgb(249, 248, 193);
   --gameboard-bgc: black;
-  --gamesquare-bgc: white;
+  --gamesquare-bgc: rgb(168, 165, 165);
+  --gamesquare-text-clr: rgb(60, 60, 60);
 }
 
 body {
@@ -39,6 +40,10 @@ nav {
   flex: 1;
 }
 
+.name {
+  list-style: none;
+}
+
 .gameplay {
   background-color: var(--gameplay-bgc);
   flex: 4;
@@ -70,8 +75,10 @@ nav {
   background-color: var(--gamesquare-bgc);
   display: grid;
   place-items: center;
+  overflow: hidden;
 }
 
 .gamesquare h1 {
   font-size: 4rem;
+  color: var(--gamesquare-text-clr);
 }
