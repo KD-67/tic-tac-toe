@@ -94,10 +94,12 @@ const Game = (() => {
       Gameboard.field[index] = "X";
       gamesquareMarks[index].innerText = "X";
       currentPlayer = 2;
+      alertMessage.innerText = "It's " + player2name + "'s move. Place your O!";
     } else if (currentPlayer === 2) {
       Gameboard.field[index] = "O";
       gamesquareMarks[index].innerText = "O";
       currentPlayer = 1;
+      alertMessage.innerText = "It's " + player1name + "'s move. Place your X!";
     }
   };
 
