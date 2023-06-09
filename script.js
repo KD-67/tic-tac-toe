@@ -40,6 +40,7 @@ let player2name = "";
 let players = [];
 let currentPlayer;
 let gameOver = true;
+let winner;
 
 // Factories:
 
@@ -101,11 +102,76 @@ const Game = (() => {
       currentPlayer = 1;
       alertMessage.innerText = "It's " + player1name + "'s move. Place your X!";
     }
+
+    checkWin();
+    if (gameOver === true && winner == "draw") {
+      currentPlayer = 0;
+      alertMessage.innerText = "GAME OVER, it's a draw!";
+    } else if (gameOver === true) {
+      currentPlayer = 0;
+      alertMessage.innerText = "GAME OVER! " + winner + " wins!";
+    }
+  };
+
+  const checkWin = () => {
+    const winCombinations = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    for (const combination of winCombinations) {
+      const [a, b, c] = combination;
+      const marks = [
+        Gameboard.field[a],
+        Gameboard.field[b],
+        Gameboard.field[c],
+      ];
+
+      if (marks.every((mark) => mark === "X")) {
+        gameOver = true;
+        winner = player1name;
+        return players[0];
+      }
+
+      if (marks.every((mark) => mark === "O")) {
+        gameOver = true;
+        winner = player2name;
+        return players[1];
+      }
+    }
+
+    if (Gameboard.field.every((mark) => mark !== "")) {
+      gameOver = true;
+      winner = "draw";
+      return "draw";
+    }
+
+    return null;
+  };
+
+  const resetGame = () => {
+    currentPlayer = 1;
+
+    gameOver = false;
+
+    Gameboard.field.fill("");
+
+    gamesquareMarks.forEach((mark) => (mark.innerText = ""));
+
+    alertMessage.innerText = player1name + ", place your first X to begin!";
   };
 
   return {
     start,
     move,
+    checkWin,
+    resetGame,
   };
 })();
 
@@ -131,6 +197,12 @@ beginGameBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
   Game.start();
+});
+
+restartGameBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  Game.resetGame();
 });
 
 // Clicking on a gamesquare during gameplay:
