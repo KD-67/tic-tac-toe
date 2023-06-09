@@ -9,21 +9,37 @@ const player2Input = document.querySelector("#player2-name");
 const alertMessage = document.querySelector("#alert-message");
 
 const gamesquares = document.querySelectorAll(".gamesquare");
-const gamesquare1 = document.querySelector("#gamequare1");
-const gamesquare2 = document.querySelector("#gamequare2");
-const gamesquare3 = document.querySelector("#gamequare3");
-const gamesquare4 = document.querySelector("#gamequare4");
-const gamesquare5 = document.querySelector("#gamequare5");
-const gamesquare6 = document.querySelector("#gamequare6");
-const gamesquare7 = document.querySelector("#gamequare7");
-const gamesquare8 = document.querySelector("#gamequare8");
-const gamesquare9 = document.querySelector("#gamequare9");
+const gamesquare1 = document.querySelector("#gamesquare1");
+const gamesquare2 = document.querySelector("#gamesquare2");
+const gamesquare3 = document.querySelector("#gamesquare3");
+const gamesquare4 = document.querySelector("#gamesquare4");
+const gamesquare5 = document.querySelector("#gamesquare5");
+const gamesquare6 = document.querySelector("#gamesquare6");
+const gamesquare7 = document.querySelector("#gamesquare7");
+const gamesquare8 = document.querySelector("#gamesquare8");
+const gamesquare9 = document.querySelector("#gamesquare9");
+const gamesquareMarks = document.querySelectorAll(".gamesquareMark");
+const gamesquareMark1 = document.querySelector("#gamesquare-mark1");
+const gamesquareMark2 = document.querySelector("#gamesquare-mark2");
+const gamesquareMark3 = document.querySelector("#gamesquare-mark3");
+const gamesquareMark4 = document.querySelector("#gamesquare-mark4");
+const gamesquareMark5 = document.querySelector("#gamesquare-mark5");
+const gamesquareMark6 = document.querySelector("#gamesquare-mark6");
+const gamesquareMark7 = document.querySelector("#gamesquare-mark7");
+const gamesquareMark8 = document.querySelector("#gamesquare-mark8");
+const gamesquareMark9 = document.querySelector("#gamesquare-mark9");
 
 const name1 = document.querySelector("#name1");
 const name2 = document.querySelector("#name2");
 
 let player1name = "";
 let player2name = "";
+
+// Gameplay Variables:
+
+let players = [];
+let currentPlayer;
+let gameOver = true;
 
 // Factories:
 
@@ -36,11 +52,14 @@ const playerFactory = (name, mark) => {
 
 // Modules:
 
-const Game = (() => {
-  let players = [];
-  let currentPlayer;
-  let gameOver;
+const Gameboard = (() => {
+  const field = ["", "", "", "", "", "", "", "", ""];
+  return {
+    field,
+  };
+})();
 
+const Game = (() => {
   const start = () => {
     players = [
       playerFactory(player1Input.value, "X"),
@@ -53,15 +72,15 @@ const Game = (() => {
     if (player1name == "" || player2name == "") {
       alertMessage.innerText = "Please provide player names before beginning!";
     } else {
-      gamesquare1.innerHTML = "";
-      gamesquare2.innerHTML = "";
-      gamesquare3.innerHTML = "";
-      gamesquare4.innerHTML = "";
-      gamesquare5.innerHTML = "";
-      gamesquare6.innerHTML = "";
-      gamesquare7.innerHTML = "";
-      gamesquare8.innerHTML = "";
-      gamesquare9.innerHTML = "";
+      gamesquareMark1.innerHTML = "";
+      gamesquareMark2.innerHTML = "";
+      gamesquareMark3.innerHTML = "";
+      gamesquareMark4.innerHTML = "";
+      gamesquareMark5.innerHTML = "";
+      gamesquareMark6.innerHTML = "";
+      gamesquareMark7.innerHTML = "";
+      gamesquareMark8.innerHTML = "";
+      gamesquareMark9.innerHTML = "";
 
       gamesquares.forEach((square) => (square.style.backgroundColor = "white"));
 
@@ -70,12 +89,25 @@ const Game = (() => {
     }
   };
 
+  const move = (index) => {
+    if (currentPlayer === 1) {
+      Gameboard.field[index] = "X";
+      gamesquareMarks[index].innerText = "X";
+      currentPlayer = 2;
+    } else if (currentPlayer === 2) {
+      Gameboard.field[index] = "O";
+      gamesquareMarks[index].innerText = "O";
+      currentPlayer = 1;
+    }
+  };
+
   return {
     start,
+    move,
   };
 })();
 
-// Functionality:
+// Buttons:
 
 nameSubmitBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -85,10 +117,26 @@ nameSubmitBtn.addEventListener("click", (e) => {
 
   name1.innerText = player1Input.value;
   name2.innerText = player2Input.value;
+  alertMessage.innerText =
+    "Welcome " +
+    player1Input.value +
+    " and " +
+    player2Input.value +
+    "! Press 'Begin new game!' to start playing!";
 });
 
 beginGameBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
   Game.start();
+});
+
+// Clicking on a gamesquare during gameplay:
+
+gamesquares.forEach((square, index) => {
+  square.addEventListener("click", () => {
+    if (Gameboard.field[index] === "") {
+      Game.move(index);
+    }
+  });
 });
